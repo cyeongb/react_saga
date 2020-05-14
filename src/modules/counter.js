@@ -1,5 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
-import { delay, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { delay, put, takeEvery, takeLatest, select } from "redux-saga/effects";
+
+// select : saga 내부에서 현재 상태를 조회하는 방법
 
 const INCREASE = "counter/INCREASE";
 const DECREASE = "counter/DECREASE";
@@ -19,6 +21,8 @@ export const decreaseAsync = createAction(DECREASE_ASYNC, () => undefined);
 function* increaseSaga() {
   yield delay(1000); //1초를 기다린다.
   yield put(increase()); // 특정 액션(INCREASE)을 dispatch 한다.
+  const number = yield select((state) => state.number); //state는 스토어 상태를 의미.
+  console.log(`현재값은${number}임`);
 }
 
 function* decreaseSaga() {
